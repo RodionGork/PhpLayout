@@ -1,0 +1,25 @@
+.header, .footer {
+    background: #eee;
+    padding: 8px;
+}
+
+.header a {
+    border-radius: 7px;
+    background: #ccc;
+    padding: 4px;
+    color: blue;
+    text-decoration: none;
+}
+
+.header a:hover {
+    background: #aaf;
+    color: yellow;
+}
+
+.errors {
+    background: #f88;
+    color: yellow;
+    padding: 5px;
+    margin-top: 5px;
+    font-weight: bold;
+}
