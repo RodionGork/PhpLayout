@@ -12,7 +12,11 @@ interface CrudDao {
     
     function find($cond = null, $limit = null, $offset = null);
     
+    function makeLookup($key = 'id', $cond = null);
+    
     function findFirst($cond = null);
+    
+    function lastError();
 }
 
 ?>

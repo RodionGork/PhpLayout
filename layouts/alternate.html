@@ -1,13 +1,14 @@
 <html>
 <head>
     <title>Special Layout</title>
+    <link rel="stylesheet" href="<?= aurl('css/common.css') ?>"/>
 </head>
 <body>
 
 <?= $ctx->elems->get('contentResult', '<div>Empty page???</div>') ?>
 
 <div>
-    <a href="<?=url('main')?>">Back</a>
+    <a href="<?= url('main') ?>">To main page</a>
 </div>
 
 </body>

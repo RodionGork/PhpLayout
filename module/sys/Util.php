@@ -31,22 +31,69 @@ class Util {
         }
     }
     
+    function flash($msg = null) {
+        if ($msg !== null) {
+            $this->sessionPut('__flash_msg', $msg);
+        } else {
+            $res = $this->sessionGet('__flash_msg');
+            $this->sessionDel('__flash_msg');
+            return $res;
+        }
+    }
+    
+    function fullUrl($url, $prefix = 'http://') {
+        return $prefix . $_SERVER['HTTP_HOST'] . url($url);
+    }
+    
+    function sendGetRequest($url, $timeout = 3) {
+        $context = stream_context_create(array('http' => array('timeout' => $timeout)));
+        return file_get_contents($url, false, $context);
+    }
+    
     function redirect($url) {
+        if (strpos($url, '/') === false) {
+            $url = url($url);
+        }
         header("Location: $url");
+        $this->changePage(null);
     }
     
     function paramGet($name) {
         if (!isset($_GET[$name])) {
             return null;
         }
-        return $this->stripSlashes($_GET[$name]);
+        return $this->paramProcess($_GET[$name]);
     }
     
     function paramPost($name) {
         if (!isset($_POST[$name])) {
             return null;
         }
-        return $this->stripSlashes($_POST[$name]);
+        return $this->paramProcess($_POST[$name]);
+    }
+
+    private function paramProcess($p) {
+        if (is_array($p)) {
+            return $p;
+        }
+        return $this->stripSlashes($p);
+    }
+    
+    function fragment($name) {
+        $name = str_replace('_', '/', $name);
+        if (!addfile('fragments/' . $name . '.html')) {
+            echo '??? FRAGMENT: ' . $name . ' ???';
+        }
+    }
+    
+    function changePage($name) {
+        $this->ctx->elems->page = $name;
+    }
+    
+    function plainOutput($data, $type = 'text/plain') {
+        $this->changePage(null);
+        header("Content-Type: $type");
+        echo $data;
     }
     
     private function stripSlashes($s) {

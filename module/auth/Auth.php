@@ -22,7 +22,7 @@ class Auth {
         if ($this->check($role)) {
             return true;
         }
-        $this->ctx->elems->page = $page;
+        $this->ctx->util->changePage($page);
         header($header);
         return false;
     }

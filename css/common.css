@@ -23,3 +23,20 @@
     margin-top: 5px;
     font-weight: bold;
 }
+
+.flash-msg {
+    background: #4AF;
+    color: yellow;
+    padding: 3px;
+    font-weight: bold;
+    margin: 3px 0px;
+    border-radius: 5px;
+}
+
+code {
+    background: #ddd;
+    color: #080;
+    font-weight: bold;
+    padding: 2px;
+    border-radius: 2px;
+}

@@ -1,25 +1,20 @@
 <html>
 <head>
     <title><?= $ctx->elems->get('title', 'My site title') ?></title>
-    <link rel="stylesheet" href="<?= aurl('css/common.css') ?>"/>
-    <?php
-    $cssName = 'css/' . $ctx->elems->page . '.css';
-    if (file_exists($cssName)) {
-        $cssName = aurl($cssName);
-        echo "<link rel=\"stylesheet\" href=\"$cssName\"/>";
-    }
-    ?>
+    <?php $ctx->util->fragment('cssandjs'); ?>
 </head>
 <body>
 
 <div class="header">
-    <?php fragment('menu'); ?>
+    <?php $ctx->util->fragment('menu'); ?>
 </div>
+
+<?= $ctx->util->fragment('flash'); ?>
 
 <?= $ctx->elems->get('contentResult', '<div>No content</div>') ?>
 
 <div class="footer">
-    <?php fragment('footer'); ?>
+    <?php $ctx->util->fragment('footer'); ?>
 </div>
 
 <?php

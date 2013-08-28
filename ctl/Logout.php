@@ -2,6 +2,8 @@
 
 $ctx->auth->logout();
 
-$ctx->util->redirect(url('main'));
+$ctx->util->flash('Logout successful. See you later!');
+
+$ctx->util->redirect('main');
 
 ?>

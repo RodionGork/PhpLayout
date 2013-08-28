@@ -1,0 +1,18 @@
+<?php
+
+foreach ($ctx->elems->styles as $name) {
+    $file = "css/$name.css";
+    if (file_exists($file)) {
+        echo '<link rel="stylesheet" href="' . aurl($file) . '"/>';
+    }
+}
+
+foreach ($ctx->elems->scripts as $name) {
+    $file = "js/$name.js";
+    if (file_exists($file)) {
+        echo '<script src="' . aurl($file) . '"></script>';
+    }
+}
+
+?>
+

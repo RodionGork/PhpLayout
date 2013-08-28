@@ -5,6 +5,8 @@ class Elems {
     public static $elems;
     
     public $layout;
+    public $styles;
+    public $scripts;
     public $page;
     public $path;
     public $conf;
@@ -14,6 +16,8 @@ class Elems {
     
     function __construct() {
         $this->layout = 'default';
+        $this->styles = array('common');
+        $this->scripts = array('common');
         $this->conf = new stdClass();
         $this->modules = array();
         $this->moduleOrder = array();
@@ -49,15 +53,17 @@ function main() {
     $ctlFile = "ctl/$ctlName.php";
     $r = addfile($ctlFile);
     
-    if (Elems::$elems->page != null) {
-        $content = 'pages/' . Elems::$elems->page . '.php';
+    if ($ctx->elems->page != null) {
+        array_push($ctx->elems->styles, $ctx->elems->page);
+        array_push($ctx->elems->scripts, $ctx->elems->page);
+        $content = 'pages/' . $ctx->elems->page . '.php';
         ob_start();
         if (!addfile($content)) {
             addfile('pages/error404.php');
         }
-        Elems::$elems->contentResult = ob_get_clean();
+        $ctx->elems->contentResult = ob_get_clean();
 
-        require('layouts/' . Elems::$elems->layout . '.html');
+        require('layouts/' . $ctx->elems->layout . '.html');
     }
 
     destroyModules();
@@ -82,7 +88,7 @@ function prepare() {
     Elems::$elems->path = preg_replace('/^(.*\/)[^\/]*$/', '$1', $_SERVER['PHP_SELF']);
     
     $page = isset($_GET['page']) ? $_GET['page'] : 'main';
-    $page = preg_replace('/[^a-z\_]/', '', $page);
+    $page = preg_replace('/[^a-z0-9\_]/', '', $page);
     $page = str_replace('_', '/', $page);
     
     Elems::$elems->page = $page;
@@ -108,13 +114,6 @@ function addfile($name) {
     }
     include($name);
     return true;
-}
-
-
-function fragment($name) {
-    if (!addfile('fragments/' . $name . '.html')) {
-        echo '???' . $name . '???';
-    }
 }
 
 

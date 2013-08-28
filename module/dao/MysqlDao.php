@@ -31,6 +31,9 @@ class MysqlDao implements CrudDao {
     
     function save($entity) {
         $a = (array) $entity;
+        foreach ($a as $k => $v) {
+            $a[$k] = $this->conn->escape_string($v);
+        }
         $names = implode(',', array_keys($a));
         $values = implode('","', array_values($a));
         $query = sprintf('replace into %s (%s) values ("%s")', $this->table, $names, $values);
@@ -65,6 +68,15 @@ class MysqlDao implements CrudDao {
         return $this->objectsArray($res);
     }
     
+    function makeLookup($key = 'id', $cond = null) {
+        $res = $this->find($cond);
+        $lookup = array();
+        foreach ($res as $val) {
+            $lookup[$val->$key] = $val;
+        }
+        return $lookup;
+    }
+    
     function findFirst($cond = null) {
         $res = $this->find($cond, 1);
         if ($res === false || sizeof($res) < 1) {
@@ -88,7 +100,7 @@ class MysqlDao implements CrudDao {
     }
     
     protected function objectsArray($res) {
-        if ($res === false) {
+        if ($res === null) {
             return false;
         }
         
@@ -105,7 +117,7 @@ class MysqlDao implements CrudDao {
     }
     
     protected function singleFieldArray($res) {
-        if ($res === false) {
+        if ($res === null) {
             return false;
         }
         
@@ -121,6 +133,10 @@ class MysqlDao implements CrudDao {
         return $f;
     }
     
+    public function lastError() {
+        return self::$shared['error'];
+    }
+    
     protected static function init() {
         if (self::$shared !== null) {
             return;
@@ -128,13 +144,17 @@ class MysqlDao implements CrudDao {
         
         global $ctx;
         $elems = $ctx->elems;
+        $port = $elems->conf->mysql['port'];
         $conn = new mysqli(
-            "{$elems->conf->mysql['host']}:{$elems->conf->mysql['port']}",
+            "{$elems->conf->mysql['host']}" . (!empty($port) ? ":$port" : ""),
             $elems->conf->mysql['username'],
             $elems->conf->mysql['password']);
         
+        self::$shared = array('conn' => $conn, 'prefix' => $elems->conf->mysql['prefix'], 'error' => null);
+        
         if ($conn->connect_error) {
-            $elems->addError('Mysql connection error');
+            self::$shared['error'] = "Mysql connection error 
+{$conn->connect_errno}";
             return;
         }
         
@@ -143,11 +163,9 @@ class MysqlDao implements CrudDao {
         $res = $conn->select_db($elems->conf->mysql['db']);
         
         if ($res === false) {
-            $elems->addError('Mysql database error');
+            self::$shared['error'] = 'Mysql database error';
             return;
         }
-        
-        self::$shared = array('conn' => $conn, 'prefix' => $elems->conf->mysql['prefix']);
     }
     
     static function onModuleDestroy() {
