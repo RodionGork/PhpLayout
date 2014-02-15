@@ -16,7 +16,7 @@ interface CrudDao {
     
     function findFirst($cond = null);
     
+    function getCount($cond = null);
+    
     function lastError();
 }
-
-?>

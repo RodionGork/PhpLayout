@@ -11,5 +11,3 @@ for ($i = 0; $i < sizeof($names); $i++) {
     $c->color = $colors[$i];
     array_push($model->lands, $c);
 }
-
-?>

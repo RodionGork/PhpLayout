@@ -30,6 +30,3 @@ class DaoAuth extends Auth {
     }
     
 }
-
-?>
-

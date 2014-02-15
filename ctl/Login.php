@@ -8,5 +8,3 @@ if ($username) {
 }
 
 $model->logged = $ctx->auth->loggedUser() !== null;
-
-?>

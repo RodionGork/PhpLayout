@@ -49,7 +49,17 @@ class Util {
     }
     
     function sendGetRequest($url, $timeout = 3) {
-        $context = stream_context_create(array('https' => array('timeout' => $timeout)));
+        $context = stream_context_create(array('http' => array('timeout' => $timeout)));
+        return file_get_contents($url, false, $context);
+    }
+    
+    function sendPostRequest($url, $data, $timeout = 3) {
+        $context = stream_context_create(array('http' => array(
+            'header' => "Content-type: application/x-www-form-urlencoded",
+            'method' => 'POST',
+            'content' => !is_string($data) ? http_build_query($data) : $data,
+            'timeout' => $timeout
+        )));
         return file_get_contents($url, false, $context);
     }
     

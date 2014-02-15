@@ -15,5 +15,3 @@ class Context extends ProtoContext {
     }
 
 }
-
-?>

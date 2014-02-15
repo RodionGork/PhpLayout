@@ -8,5 +8,3 @@ if ($error) {
 }
 
 $model->users = $ctx->usersDao->find();
-
-?>

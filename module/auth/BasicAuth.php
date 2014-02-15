@@ -17,6 +17,3 @@ class BasicAuth extends Auth {
     }
 
 }
-
-?>
-

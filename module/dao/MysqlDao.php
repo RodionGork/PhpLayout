@@ -85,6 +85,18 @@ class MysqlDao implements CrudDao {
         return $res[0];
     }
     
+    function getCount($cond = null) {
+        $query = "select count(*) from {$this->table}";
+        $query .= $this->clauses($cond, null, null);
+        $res = $this->conn->query($query);
+        $res = $this->singleFieldArray($res);
+        return $res[0];
+    }
+
+    protected function query($query) {
+        return $this->conn->query($query);
+    }
+    
     private function clauses($cond, $limit, $offset) {
         if ($cond !== null) {
             $query = " where $cond";
@@ -100,7 +112,7 @@ class MysqlDao implements CrudDao {
     }
     
     protected function objectsArray($res) {
-        if ($res === null) {
+        if ($res === false) {
             return false;
         }
         
@@ -177,5 +189,3 @@ class MysqlDao implements CrudDao {
     }
     
 }
-
-?>
