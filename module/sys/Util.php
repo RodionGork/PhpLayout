@@ -42,11 +42,14 @@ class Util {
     }
     
     function fullUrl($url, $prefix = 'http://') {
-        return $prefix . $_SERVER['HTTP_HOST'] . url($url);
+        if (strpos($url, '/') === false) {
+            $url = url($url);
+        }
+        return $prefix . $_SERVER['HTTP_HOST'] . $url;
     }
     
     function sendGetRequest($url, $timeout = 3) {
-        $context = stream_context_create(array('http' => array('timeout' => $timeout)));
+        $context = stream_context_create(array('https' => array('timeout' => $timeout)));
         return file_get_contents($url, false, $context);
     }
     
@@ -104,6 +107,3 @@ class Util {
     }
     
 }
-
-?>
-

@@ -49,9 +49,13 @@ function main() {
     
     prepare();
     
+    addFile("ctl/_hookBefore.php");
+    
     $ctlName = preg_replace_callback('/\w+$/', 'capitalizeReplace', Elems::$elems->page);
     $ctlFile = "ctl/$ctlName.php";
     $r = addfile($ctlFile);
+    
+    addFile("ctl/_hookPreRender.php");
     
     if ($ctx->elems->page != null) {
         array_push($ctx->elems->styles, $ctx->elems->page);
@@ -62,10 +66,15 @@ function main() {
             addfile('pages/error404.php');
         }
         $ctx->elems->contentResult = ob_get_clean();
-
+        
+        ob_start();
         require('layouts/' . $ctx->elems->layout . '.html');
+        $rendered = ob_get_clean();
+        echo $rendered;
     }
 
+    addFile("ctl/_hookAfter.php");
+    
     destroyModules();
 }
 
@@ -123,12 +132,26 @@ function url($name) {
     $res = $rewrite ? "{$path}index/$name" : "{$path}index.php?page=$name";
     
     $numArgs = func_num_args();
-    if ($numArgs >= 3) {
+    if ($numArgs == 3) {
+        $args = func_get_args();
+        if ($rewrite) {
+            $pname = $args[1];
+            if ($pname != 'param') {
+                $res .= "/{$args[1]}_{$args[2]}";
+            } else {
+                $res .= "/{$args[2]}";
+            }
+        } else {
+            $res .= "&{$args[1]}={$args[2]}";
+        }
+    } else if ($numArgs > 3) {
         $i = 1;
         $args = func_get_args();
         $query = array();
         while ($i < $numArgs - 1) {
-            array_push($query, $args[$i] . "=" . $args[$i + 1]);
+            if ($args[$i] !== null && $args[$i + 1] !== null) {
+                array_push($query, $args[$i] . "=" . $args[$i + 1]);
+            }
             $i += 2;
         }
         $res .= ($rewrite ? '?' : '&') . implode('&', $query);
