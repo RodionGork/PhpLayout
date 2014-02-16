@@ -1,0 +1,119 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+                     "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="800px" height="350px">
+
+    <g font-family="Arial" font-size="15" text-anchor="middle">
+        <g>
+            <g stroke="blue" fill="none">
+                <rect x="10" y="10" width="100" height="80"/>
+                <rect x="10" y="110" width="100" height="80"/>
+                <rect x="10" y="210" width="100" height="80"/>
+            </g>
+            <g stroke="black" fill="none">
+                <line x1="112" y1="50" x2="158" y2="50"/>
+                <line x1="158" y1="50" x2="138" y2="45"/>
+                <line x1="158" y1="50" x2="138" y2="55"/>
+                
+                <line x1="112" y1="150" x2="158" y2="150"/>
+                <line x1="158" y1="150" x2="138" y2="145"/>
+                <line x1="158" y1="150" x2="138" y2="155"/>
+                
+                <line x1="112" y1="250" x2="158" y2="250"/>
+                <line x1="158" y1="250" x2="138" y2="255"/>
+                <line x1="158" y1="250" x2="135" y2="245"/>
+            </g>
+            <g fill="blue" stroke="none">
+                <text x="60" y="55">Add User</text>
+                <text x="60" y="155">Add Story</text>
+                <text x="60" y="255">View Story</text>
+            </g>
+        </g>
+
+        <g transform="translate(150,0)">
+            <g stroke="green" fill="none">
+                <rect x="10" y="10" width="100" height="80"/>
+                <rect x="10" y="110" width="100" height="80"/>
+                <rect x="10" y="210" width="100" height="80"/>
+            </g>
+            <g stroke="black" fill="none">
+                <line x1="112" y1="50" x2="158" y2="50"/>
+                <line x1="158" y1="50" x2="138" y2="45"/>
+                <line x1="158" y1="50" x2="138" y2="55"/>
+                
+                <line x1="112" y1="150" x2="158" y2="150"/>
+                <line x1="158" y1="150" x2="138" y2="145"/>
+                <line x1="158" y1="150" x2="138" y2="155"/>
+                
+                <line x1="112" y1="250" x2="158" y2="170"/>
+                <line x1="158" y1="170" x2="138" y2="195"/>
+                <line x1="158" y1="170" x2="145" y2="200"/>
+            </g>
+            <g fill="green" stroke="none">
+                <text x="60" y="55">user/Add</text>
+                <text x="60" y="155">story/Add</text>
+                <text x="60" y="255">story/View</text>
+            </g>
+        </g>
+        
+        <g transform="translate(300,0)">
+            <g stroke="brown" fill="none">
+                <rect x="10" y="10" width="100" height="80"/>
+                <rect x="10" y="110" width="100" height="80"/>
+            </g>
+            <g stroke="black" fill="none">
+                <line x1="112" y1="50" x2="158" y2="50"/>
+                <line x1="158" y1="50" x2="138" y2="45"/>
+                <line x1="158" y1="50" x2="138" y2="55"/>
+                
+                <line x1="112" y1="150" x2="158" y2="150"/>
+                <line x1="158" y1="150" x2="138" y2="145"/>
+                <line x1="158" y1="150" x2="138" y2="155"/>
+                
+                <line x1="112" y1="130" x2="158" y2="70"/>
+                <line x1="158" y1="70" x2="136" y2="90"/>
+                <line x1="158" y1="70" x2="144" y2="97"/>
+            </g>
+            <g fill="brown" stroke="none">
+                <text x="60" y="55">UserService</text>
+                <text x="60" y="155">StoryService</text>
+            </g>
+        </g>
+
+        <g transform="translate(450,0)">
+            <g stroke="red" fill="none">
+                <rect x="10" y="10" width="100" height="80"/>
+                <rect x="10" y="110" width="100" height="80"/>
+            </g>
+            <g fill="red" stroke="none">
+                <text x="60" y="55">UserDao</text>
+                <text x="60" y="155">StoryDao</text>
+            </g>
+            <g stroke="black" fill="none">
+                <line x1="112" y1="50" x2="158" y2="50"/>
+                <line x1="158" y1="50" x2="138" y2="45"/>
+                <line x1="158" y1="50" x2="138" y2="55"/>
+                
+                <line x1="112" y1="150" x2="158" y2="150"/>
+                <line x1="158" y1="150" x2="138" y2="145"/>
+                <line x1="158" y1="150" x2="138" y2="155"/>
+            </g>
+        </g>
+        
+        <g stroke="black" fill="none">
+            <path d="M 610,30 a 50,20 0 0,1 100,0"/>
+            <path d="M 610,30 a 50,20 0 0,0 100,0"/>
+            <path d="M 610,30 v 140 a 50,20 0 0,0 100,0 v -140"/>
+        </g>
+        
+        <g fill="black" stroke="none">
+            <text x="60" y="320">Views (pages)</text>
+            <text x="210" y="320">Controllers</text>
+            <text x="360" y="320">Services</text>
+            <text x="510" y="320">Data Access</text>
+            <text x="660" y="320">Database</text>
+        </g>
+    </g>
+    
+</svg>
+
