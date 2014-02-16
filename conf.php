@@ -1,4 +1,5 @@
 <?php
+//Rename or copy this file to cust_conf.php and create your custom configuration
 
 //ini_set('display_errors', 0);
 
