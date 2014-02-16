@@ -1,20 +1,2 @@
 <a href="<?=url('main')?>">Main page</a>
-<a href="<?=url('simple')?>">Simple page</a>
-<a href="<?=url('special')?>">Special layout</a>
-<a href="<?=url('param')?>">Param Test</a>
-<a href="<?=url('secret')?>">Secret</a>
-<?php
-
-if ($ctx->auth->loggedUser() === null) {
-    $url = url('login');
-    $label = 'Login';
-} else {
-    $url = url('logout');
-    $label = 'Logout';
-}
-
-?>
-<a href="<?=$url?>"><?=$label?></a>
-
-<a href="<?=url('about')?>">About us</a>
 

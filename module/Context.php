@@ -8,10 +8,5 @@ class Context extends ProtoContext {
         module('auth/BasicAuth');
         return new BasicAuth();
     }
-    
-    protected function getUsersDao() {
-        module('dao/MysqlDao');
-        return new MysqlDao('users');
-    }
 
 }
