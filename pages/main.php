@@ -10,8 +10,5 @@ as a full-stack MVC framework to build complex web-applications with support of 
 </p>
 
 <p>
-<b>Swithch these pages</b> to get general idea of how PhpLayout works. Right now click "Simple Page" in top-menu, or
-"next" link at the bottom...
+If you do not know how to start, try <b>PhpLayout-demo</b> version and read <a href="https://github.com/RodionGork/PhpLayout/wiki">project wiki</a>.
 </p>
-
-<p><a href="<?= url('simple') ?>">Next</a></p>
