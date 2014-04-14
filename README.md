@@ -1,7 +1,8 @@
 PhpLayout
 =========
 
-PHP full-stack micro-framework for small sites / applications, it is MVC, featuring "Slim models, Slim controllers" ideology.
+PHP full-stack micro-framework for small sites / applications, it is MVC, featuring Anemic Domain Model (yes, one
+which is considered anti-pattern by some ideologists, but is widely used in enterprise applications) - or otherwise "Slim models, Slim controllers" ideology.
 
 Documentation is still in progress, currently it is built into distribution. So, after downloading files and
 putting them into your server's htdocs, you can investigate main features starting from the first page.
