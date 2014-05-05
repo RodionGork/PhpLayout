@@ -1,7 +1,8 @@
 <?php
 
-module('dao/CrudDao');
-module('auth/Auth');
+namespace module\auth;
+
+use module\dao\CrudDao;
 
 class DaoAuth extends Auth {
     
@@ -30,3 +31,4 @@ class DaoAuth extends Auth {
     }
     
 }
+

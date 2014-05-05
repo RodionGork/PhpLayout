@@ -1,12 +1,11 @@
 <?php
 
-module('sys/ProtoContext');
+namespace module;
 
-class Context extends ProtoContext {
+class Context extends \module\sys\ProtoContext {
 
     protected function getAuth() {
-        module('auth/BasicAuth');
-        return new BasicAuth();
+        return new \module\auth\BasicAuth();
     }
 
 }

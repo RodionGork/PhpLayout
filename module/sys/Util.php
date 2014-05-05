@@ -1,5 +1,7 @@
 <?php
 
+namespace module\sys;
+
 class Util {
     
     private $sessionStarted;

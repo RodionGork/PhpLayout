@@ -1,6 +1,6 @@
 <?php
 
-module('auth/Auth');
+namespace module\auth;
 
 class BasicAuth extends Auth {
     

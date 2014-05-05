@@ -1,7 +1,9 @@
 <?php
 
-class ProtoContext {
+namespace module\sys;
 
+class ProtoContext {
+    
     function __get($name) {
         $methodName = 'get' . ucfirst($name);
         if (!method_exists($this, $methodName)) {
@@ -16,12 +18,11 @@ class ProtoContext {
     }
     
     protected function getElems() {
-        return Elems::$elems;
+        return \module\sys\Elems::$elems;
     }
     
     protected function getUtil() {
-        module('sys/Util');
-        return new Util();
+        return new \module\sys\Util();
     }
 
 }

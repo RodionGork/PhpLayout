@@ -1,6 +1,6 @@
 <?php
 
-module('dao/CrudDao');
+namespace module\dao;
 
 class MysqlDao implements CrudDao {
     
@@ -157,7 +157,7 @@ class MysqlDao implements CrudDao {
         global $ctx;
         $elems = $ctx->elems;
         $port = $elems->conf->mysql['port'];
-        $conn = new mysqli(
+        $conn = new \mysqli(
             "{$elems->conf->mysql['host']}" . (!empty($port) ? ":$port" : ""),
             $elems->conf->mysql['username'],
             $elems->conf->mysql['password']);
@@ -165,8 +165,7 @@ class MysqlDao implements CrudDao {
         self::$shared = array('conn' => $conn, 'prefix' => $elems->conf->mysql['prefix'], 'error' => null);
         
         if ($conn->connect_error) {
-            self::$shared['error'] = "Mysql connection error 
-{$conn->connect_errno}";
+            self::$shared['error'] = "Mysql connection error {$conn->connect_errno}";
             return;
         }
         
@@ -180,7 +179,7 @@ class MysqlDao implements CrudDao {
         }
     }
     
-    static function onModuleDestroy() {
+    function __destruct() {
         if (self::$shared === null) {
             return;
         }

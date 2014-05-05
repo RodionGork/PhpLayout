@@ -1,5 +1,7 @@
 <?php
 
+namespace module\dao;
+
 interface CrudDao {
 
     function read($id);

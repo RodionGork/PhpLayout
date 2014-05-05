@@ -1,48 +1,6 @@
 <?php
 
-class Elems {
-    
-    public static $elems;
-    
-    public $layout;
-    public $styles;
-    public $scripts;
-    public $page;
-    public $path;
-    public $conf;
-    public $modules;
-    public $moduleOrder;
-    public $errors;
-    
-    function __construct() {
-        $this->layout = 'default';
-        $this->styles = array('common');
-        $this->scripts = array('common');
-        $this->conf = new stdClass();
-        $this->modules = array();
-        $this->moduleOrder = array();
-        $this->errors = array();
-    }
-    
-    function get($field, $default = '') {
-        if (isset($this->$field)) {
-            return $this->$field;
-        }
-        return $default;
-    }
-    
-    function addError($e) {
-        array_push($this->errors, $e);
-    }
-}
-
-class ModelClass {
-}
-
-
-
 main();
-
 
 function main() {
     global $ctx;
@@ -51,7 +9,7 @@ function main() {
     
     addFile("ctl/_hookBefore.php");
     
-    $ctlName = preg_replace_callback('/\w+$/', 'capitalizeReplace', Elems::$elems->page);
+    $ctlName = preg_replace_callback('/\w+$/', 'capitalizeReplace', $ctx->elems->page);
     $ctlFile = "ctl/$ctlName.php";
     $r = addfile($ctlFile);
     
@@ -85,30 +43,29 @@ function capitalizeReplace($m) {
 function prepare() {
     global $model, $ctx;
     
-    Elems::$elems = new Elems();
-    $model = new ModelClass();
+    new \module\sys\Elems();
+    $model = new \stdClass();
     
-    module('Context');
-    $ctx = new Context();
+    $ctx = new \module\Context();
     
     addFile('conf.php');
     addFile('cust_conf.php');
     
-    Elems::$elems->path = preg_replace('/^(.*\/)[^\/]*$/', '$1', $_SERVER['PHP_SELF']);
+    $ctx->elems->path = preg_replace('/^(.*\/)[^\/]*$/', '$1', $_SERVER['PHP_SELF']);
     
     $page = isset($_GET['page']) ? $_GET['page'] : 'main';
     $page = preg_replace('/[^a-z0-9\_]/', '', $page);
     $page = str_replace('_', '/', $page);
     
-    Elems::$elems->page = $page;
+    $ctx->elems->page = $page;
     
 }
 
 
 function destroyModules() {
-    
-    for ($i = sizeof(Elems::$elems->moduleOrder) - 1; $i >= 0; $i --) {
-        $moduleClass = Elems::$elems->modules[Elems::$elems->moduleOrder[$i]];
+    global $ctx;
+    for ($i = sizeof($ctx->elems->moduleOrder) - 1; $i >= 0; $i --) {
+        $moduleClass = $ctx->elems->modules[$ctx->elems->moduleOrder[$i]];
         if (method_exists($moduleClass, 'onModuleDestroy')) {
             call_user_func("$moduleClass::onModuleDestroy");
         }
@@ -127,8 +84,9 @@ function addfile($name) {
 
 
 function url($name) {
-    $path = Elems::$elems->path;
-    $rewrite = Elems::$elems->conf->modrewrite;
+    global $ctx;
+    $path = $ctx->elems->path;
+    $rewrite = $ctx->elems->conf->modrewrite;
     $res = $rewrite ? "{$path}index/$name" : "{$path}index.php?page=$name";
     
     $numArgs = func_num_args();
@@ -161,25 +119,16 @@ function url($name) {
 
 
 function aurl($url) {
-    return Elems::$elems->path . $url;
+    global $ctx;
+    return $ctx->elems->path . $url;
 }
 
-
-function module($name) {
-    if (isset(Elems::$elems->modules[$name])) {
-        return;
+function __autoload($class) {
+    $path = str_replace('\\', '/', $class) . '.php';
+    require $path;
+    if (!class_exists($class, false) && !interface_exists($class, false)) {
+        echo "Loading $class failed!\n";
     }
-    $className = preg_replace('/.*\/(.*)/', '$1', $name);
-    if (class_exists($className, false) || interface_exists($className, false)) {
-        Elems::$elems->addError("Module class redefinition: $name $className");
-    }
-    require "module/$name.php";
-    if (!class_exists($className, false) && !interface_exists($className, false)) {
-        Elems::$elems->addError("Module failed to define class: $name $className");
-    }
-    Elems::$elems->modules[$name] = $className;
-    array_push(Elems::$elems->moduleOrder, $name);
 }
-
 
 ?>

@@ -1,5 +1,7 @@
 <?php
 
+namespace module\auth;
+
 class Auth {
 
     function login($username, $data) {
