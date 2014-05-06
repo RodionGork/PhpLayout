@@ -149,6 +149,10 @@ class MysqlDao implements CrudDao {
         return self::$shared['error'];
     }
     
+    public function getTable() {
+        return $this->table;
+    }
+    
     protected static function init() {
         if (self::$shared !== null) {
             return;
