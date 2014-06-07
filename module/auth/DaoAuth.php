@@ -15,6 +15,7 @@ class DaoAuth extends Auth {
     }
     
     function login($username, $password) {
+        $username = preg_replace("/[\\'\\;]/", '', $username);
         $record = $this->userDao->findFirst("username = '$username'");
         if ($record === false || $record->password != $password) {
             return false;
