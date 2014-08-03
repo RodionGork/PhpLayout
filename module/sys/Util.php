@@ -26,9 +26,8 @@ class Util {
     
     private function sessionPrepare() {
         if (!$this->sessionStarted) {
-            if (session_id() == '') {
-                session_start();
-            }
+            ini_set('session.gc_maxlifetime', 5400);
+            session_start();
             $this->sessionStarted = true;
         }
     }
@@ -102,7 +101,7 @@ class Util {
     }
     
     function changePage($name) {
-        $this->ctx->elems->page = $name;
+        $this->ctx->elems->page = str_replace('_', '/', $name);
     }
     
     function plainOutput($data, $type = 'text/plain') {
