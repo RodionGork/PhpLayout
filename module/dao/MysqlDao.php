@@ -18,7 +18,7 @@ class MysqlDao implements CrudDao {
     }
     
     function read($id) {
-        $query = "select * from {$this->table} where id = $id";
+        $query = "select * from {$this->table} where id = '$id'";
         $res = $this->conn->query($query);
         
         if ($res === false || $res->num_rows < 1) {
@@ -31,12 +31,19 @@ class MysqlDao implements CrudDao {
     
     function save($entity) {
         $a = (array) $entity;
+        $names = '';
+        $values = '';
         foreach ($a as $k => $v) {
-            $a[$k] = $this->conn->escape_string($v);
+            $names .= $k . ',';
+            if ($v !== null) {
+                $values .= '"' . $this->conn->escape_string($v) . '",';
+            } else {
+                $values .= 'null,';
+            }
         }
-        $names = implode(',', array_keys($a));
-        $values = implode('","', array_values($a));
-        $query = sprintf('replace into %s (%s) values ("%s")', $this->table, $names, $values);
+        $names = rtrim($names, ',');
+        $values = rtrim($values, ',');
+        $query = sprintf('replace into %s (%s) values (%s)', $this->table, $names, $values);
         $res = $this->conn->query($query);
         if ($res === false) {
             return false;
@@ -48,7 +55,7 @@ class MysqlDao implements CrudDao {
     }
     
     function delete($id) {
-        $query = "delete from {$this->table} where id = $id";
+        $query = "delete from {$this->table} where id = '$id'";
         return $this->conn->query($query);
     }
     
